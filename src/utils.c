@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:10:48 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/02 11:39:08 by ppeckham         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:51:01 by szapata-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,43 @@ int	ft_strspn(const char *str, const char *set)
 	return (0);
 }
 
-void	ft_print_info(t_info *info)
+// void	ft_print_info(t_info *info)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	printf("vali: %d\n", info->validation);
+// 	while (i < 4)
+// 	{
+// 		printf("texture: %s\n", info->textures[i]);
+// 		i++;
+// 	}
+// 	printf("floor: %x\n", info->floor);
+// 	printf("ceiling: %x\n", info->ceiling);
+// }
+int	free_array(char **array)
 {
 	int	i;
 
 	i = 0;
-	printf("vali: %d\n", info->validation);
-	while (i < 4)
+	while (array[i] != NULL)
 	{
-		printf("texture: %s\n", info->textures[i]);
+		free(array[i]);
 		i++;
 	}
-	printf("floor: %x\n", info->floor);
-	printf("ceiling: %x\n", info->ceiling);
+	free(array);
+	return (1);
+}
+
+int	ft_maplen(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (*map)
+	{
+		i++;
+		map++;
+	}
+	return (i);
 }

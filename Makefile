@@ -1,7 +1,8 @@
 MLX = MLX42/build/libmlx42.a
 LIBFT = libft/libft.a
-CC = cc -Wall -Werror -Wextra -fsanitize=address -g
-# INC = -Iinclude -ldl -lglfw -pthread -lm
+CC = cc 
+FLAGS = -Wall -Werror -Wextra -fsanitize=address -g
+INC = -Iinclude -ldl -lglfw -pthread -lm
 NAME = cub3D
 SRC = $(wildcard src/*.c)
 OBJ_DIR = obj
@@ -14,7 +15,7 @@ $(OBJ_DIR)/%.o: src/%.c
 all: $(NAME)
 
 $(NAME): ${OBJT} $(LIBFT) $(MLX)
-	@$(CC) $(INC) $(OBJT) $(LIBFT) $(MLX) -o $(NAME)
+	@$(CC) $(OBJT) $(LIBFT) $(MLX) $(INC) -o $(NAME)
 
 $(LIBFT):
 	@make -C libft
@@ -30,6 +31,8 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 
-re: fclean all
+re:
+	@make re -C libft
+	@make fclean all
 
 .PHONY: clean fclean re all

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_n_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:05:03 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/02 11:06:17 by ppeckham         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:53:12 by szapata-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ void	ft_free_info(t_info *info)
 		free(info->textures[i]);
 		i++;
 	}
+	i = 0;
+	while (info->map[i])
+		free(info->map[i++]);
+	free(info->map);
 }
 
 void	print_usage(void)
@@ -68,4 +72,15 @@ void	print_err(int err)
 		ft_putstr_fd("RGB not set for ceiling\n", 2);
 	else if (err == 11)
 		ft_putstr_fd("RGB not set properly\n", 2);
+}
+
+int	print_err2(int err)
+{
+	if (err == 20)
+		ft_putstr_fd("Invalid map\n", 2);
+	else if (err == 21)
+		ft_putstr_fd("Invalid number of players\n", 2);
+	else if (err == 22)
+		ft_putstr_fd("Invalid config file\n", 2);
+	return (1);
 }
