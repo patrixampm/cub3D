@@ -29,6 +29,7 @@ clean:
 	@make clean -s -C MLX42/build
 
 fclean: clean
+	@make fclean -s -C libft
 	@rm -rf $(NAME)
 
 re:

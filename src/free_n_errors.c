@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_n_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:05:03 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/07 12:23:08 by ppeckham         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:41:20 by szapata-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ void	ft_free_info(t_info *info)
 	}
 	i = 0;
 	if (info->map)
-	{
-		while (info->map[i])
-			free(info->map[i++]);
-		free(info->map);
-	}
+		ft_free_split(info->map);
+	free(info->player);
 }
 
 void	print_usage(void)
@@ -85,5 +82,10 @@ int	print_err2(int err)
 		ft_putstr_fd("Invalid number of players\n", 2);
 	else if (err == 22)
 		ft_putstr_fd("Invalid config file\n", 2);
+	else if (err == 23)
+	{
+		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 2);
+		ft_putstr_fd("\n", 2);
+	}
 	return (1);
 }
