@@ -6,7 +6,7 @@
 /*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:49:00 by szapata-          #+#    #+#             */
-/*   Updated: 2025/04/02 11:40:38 by ppeckham         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:37:23 by ppeckham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,16 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <fcntl.h>
+# include <stdlib.h>
 
 //	STRUCTURES
+
+typedef struct s_player
+{
+	int		line;
+	int		column;
+	char	orientation;
+}	t_player;
 
 typedef struct s_info
 {
@@ -29,6 +37,8 @@ typedef struct s_info
 	uint32_t	ceiling;
 	char		**map;
 	int			validation;
+	t_player	*player;
+	mlx_t		*mlx;
 }	t_info;
 
 //	FUNCTIONS
@@ -38,15 +48,16 @@ void	ft_free_split(char **split);
 void	ft_free_info(t_info *info);
 void	print_usage(void);
 void	print_err(int err);
+int		print_err2(int err);
 void	ft_print_info(t_info *info);
 
 // Other utils
 int		ft_isspace(char c);
 int		ft_strspn(const char *str, const char *set);
+int     free_array(char **array);
 
 // Input parsing
-int		ft_allset(t_info *info);
-int		set_map(char *line, int fd, t_info *info);
+void	set_map(char *line, int fd, t_info *info);
 int		ft_check_rgb(char **split);
 void	ft_color_split(char **split, char *line, t_info *info, int *rgb);
 int		set_color(char *line, t_info *info, int type);
@@ -55,5 +66,15 @@ char	*set_texture(char *line, t_info *info, int type);
 int		ft_parse_paths(char *line, t_info *info);
 void	ft_validate_info(t_info *info);
 int		parse_file(int fd, t_info *info);
+int		check_map_valid(char **map);
+void	map_trim(char **map);
+int		ft_big(char **map);
+void	fill_map(char **m1, char **m2, int x, int y);
+char	**create_map(int x, int y);
+int		ft_maplen(char **map);
+
+// Game
+void	ft_set_player(t_info *info);
+void	ft_game(t_info *info);
 
 #endif

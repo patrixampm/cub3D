@@ -6,7 +6,7 @@
 /*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:48:22 by szapata-          #+#    #+#             */
-/*   Updated: 2025/04/02 11:11:14 by ppeckham         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:40:52 by ppeckham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	set_game(char *filename)
 		ft_free_info(&info);
 		return ;
 	}
+	ft_game(&info);
+	ft_free_info(&info);
 }
 
 int	main(int ac, char **av)

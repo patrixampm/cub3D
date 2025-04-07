@@ -6,7 +6,7 @@
 /*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:01:28 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/02 11:36:19 by ppeckham         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:36:32 by ppeckham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ void	ft_init_vars(t_info *info)
 	info->floor = -1;
 	info->ceiling = -1;
 	info->validation = 0;
+	info->player = malloc(sizeof(t_player));
+	if (!info->player)
+	{
+		ft_free_info(info);
+		print_err(3);
+		exit(EXIT_FAILURE);
+	}
 }
 
 char	*set_texture(char *line, t_info *info, int type)
@@ -59,11 +66,24 @@ int	ft_parse_paths(char *line, t_info *info)
 
 void	ft_validate_info(t_info *info)
 {
+	int	i;
+
+	i = 0;
 	if (info->validation != 6)
 	{
 		print_err(4);
 		ft_free_info(info);
 		exit(EXIT_FAILURE);
+	}
+	while (i < 4)
+	{
+		if (access(info->textures[i], R_OK))
+		{
+			ft_free_info(info);
+			perror("Error");
+			exit(EXIT_FAILURE);
+		}
+		i++;
 	}
 }
 
@@ -81,16 +101,13 @@ int	parse_file(int fd, t_info *info)
 		while (ft_isspace(*line))
 			line++;
 		if (!ft_parse_paths(line, info))
-		{
-			free(tmp);
 			break ;
-		}
 		free(tmp);
 		line = get_next_line(fd);
 	}
-	ft_print_info(info);
 	ft_validate_info(info);
-	set_map(line, fd, info);
-	ft_free_info(info);
+	set_map(tmp, fd, info);
+	check_map_valid(info->map);
+	close(fd);
 	return (1);
 }
