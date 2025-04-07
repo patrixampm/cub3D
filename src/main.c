@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:48:22 by szapata-          #+#    #+#             */
-/*   Updated: 2025/04/03 13:51:39 by szapata-         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:40:52 by ppeckham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	set_game(char *filename)
 		ft_free_info(&info);
 		return ;
 	}
+	ft_game(&info);
 	ft_free_info(&info);
 }
 

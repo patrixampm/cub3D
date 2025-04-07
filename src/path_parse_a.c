@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_parse_a.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:01:28 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/03 13:19:44 by szapata-         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:36:32 by ppeckham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ void	ft_init_vars(t_info *info)
 	info->floor = -1;
 	info->ceiling = -1;
 	info->validation = 0;
+	info->player = malloc(sizeof(t_player));
+	if (!info->player)
+	{
+		ft_free_info(info);
+		print_err(3);
+		exit(EXIT_FAILURE);
+	}
 }
 
 char	*set_texture(char *line, t_info *info, int type)

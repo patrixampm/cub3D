@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:49:00 by szapata-          #+#    #+#             */
-/*   Updated: 2025/04/03 13:32:38 by szapata-         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:37:23 by ppeckham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@
 
 //	STRUCTURES
 
+typedef struct s_player
+{
+	int		line;
+	int		column;
+	char	orientation;
+}	t_player;
+
 typedef struct s_info
 {
 	char		*textures[4];
@@ -30,6 +37,8 @@ typedef struct s_info
 	uint32_t	ceiling;
 	char		**map;
 	int			validation;
+	t_player	*player;
+	mlx_t		*mlx;
 }	t_info;
 
 //	FUNCTIONS
@@ -48,7 +57,6 @@ int		ft_strspn(const char *str, const char *set);
 int     free_array(char **array);
 
 // Input parsing
-int		ft_allset(t_info *info);
 void	set_map(char *line, int fd, t_info *info);
 int		ft_check_rgb(char **split);
 void	ft_color_split(char **split, char *line, t_info *info, int *rgb);
@@ -65,5 +73,8 @@ void	fill_map(char **m1, char **m2, int x, int y);
 char	**create_map(int x, int y);
 int		ft_maplen(char **map);
 
+// Game
+void	ft_set_player(t_info *info);
+void	ft_game(t_info *info);
 
 #endif

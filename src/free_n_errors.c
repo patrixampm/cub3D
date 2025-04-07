@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_n_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:05:03 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/03 12:53:12 by szapata-         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:23:08 by ppeckham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ void	ft_free_info(t_info *info)
 		i++;
 	}
 	i = 0;
-	while (info->map[i])
-		free(info->map[i++]);
-	free(info->map);
+	if (info->map)
+	{
+		while (info->map[i])
+			free(info->map[i++]);
+		free(info->map);
+	}
 }
 
 void	print_usage(void)
