@@ -6,7 +6,7 @@
 /*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:49:00 by szapata-          #+#    #+#             */
-/*   Updated: 2025/04/07 13:37:23 by ppeckham         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:05:37 by ppeckham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,13 @@
 
 typedef struct s_player
 {
-	int		line;
-	int		column;
-	char	orientation;
+	double	posx;
+	double	posy;
+	int		dirx;
+	int		diry;
+	double	planex;
+	double	planey;
+	char	init_dir;
 }	t_player;
 
 typedef struct s_info
@@ -39,6 +43,19 @@ typedef struct s_info
 	int			validation;
 	t_player	*player;
 	mlx_t		*mlx;
+	mlx_image_t	*img;
+	int			h;
+	int			w;
+	int			map_w;
+	int			map_h;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	double		delta_distx;
+	double		delta_disty;
+	int			stepx;
+	int			stepy;
+	double		side_distx;
+	double		side_disty;
 }	t_info;
 
 //	FUNCTIONS
