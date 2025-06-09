@@ -6,7 +6,7 @@
 /*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:10:48 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/03 14:51:01 by szapata-         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:18:15 by szapata-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,14 @@ int	ft_maplen(char **map)
 		map++;
 	}
 	return (i);
+}
+
+int	ft_col_len(char **map, int x)
+{
+	int	y;
+
+	y = ft_maplen(map) - 1;
+	while (map[y][x] != '1')
+		y--;
+	return (y);
 }

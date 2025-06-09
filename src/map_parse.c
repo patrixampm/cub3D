@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:07:28 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/07 12:57:56 by ppeckham         ###   ########.fr       */
+/*   Updated: 2025/06/09 12:43:42 by szapata-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	set_map(char *line, int fd, t_info *info)
 	}
 	free(line);
 	if (tmp[ft_strlen(tmp) - 1] == '\n' && print_err2(22))
+	{
+		free(tmp);
 		return ;
+	}
 	info->map = ft_split(tmp, '\n');
 	free(tmp);
 }

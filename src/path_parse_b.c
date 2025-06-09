@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_parse_b.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:08:50 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/02 11:37:17 by ppeckham         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:14:36 by szapata-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_check_rgb(char **split)
 	while (split[i])
 	{
 		j = 0;
+		while (ft_isspace(split[i][j]))
+			j++;
 		while (split[i][j] && split[i][j] != '\n')
 		{
 			if (!ft_isdigit(split[i][j]))
@@ -31,6 +33,25 @@ int	ft_check_rgb(char **split)
 	}
 	if (i != 3)
 		return (0);
+	return (1);
+}
+
+int	check_rgb_val(char **split, int *rgb)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		rgb[i] = ft_atoi(split[i]);
+		if (rgb[i] > 255 || rgb[i] < 0)
+		{
+			print_err(2);
+			free_array(split);
+			return (0);
+		}
+		i++;
+	}
 	return (1);
 }
 
@@ -47,17 +68,30 @@ void	ft_color_split(char **split, char *line, t_info *info, int *rgb)
 		ft_free_info(info);
 		exit(EXIT_FAILURE);
 	}
-	while (split[i])
+	if (!check_rgb_val(split, rgb))
 	{
-		rgb[i] = ft_atoi(split[i]);
-		if (rgb[i] > 255 || rgb[i] < 0)
-		{
-			print_err(2);
-			break ;
-		}
-		i++;
+		ft_free_info(info);
+		exit(EXIT_FAILURE);
 	}
 	ft_free_split(split);
+}
+
+int	check_comma(char *str)
+{
+	int	i;
+	int	c;
+
+	c = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ',')
+			c++;
+		i++;
+	}
+	if (c == 2)
+		return (1);
+	return (0);
 }
 
 int	set_color(char *line, t_info *info, int type)
@@ -70,7 +104,7 @@ int	set_color(char *line, t_info *info, int type)
 	line++;
 	while (ft_isspace(*line))
 		line++;
-	if (*line < '0' || *line > '9')
+	if ((*line < '0' || *line > '9') || !check_comma(line))
 	{
 		print_err(type);
 		return (0);

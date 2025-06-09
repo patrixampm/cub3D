@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_parse_a.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppeckham <ppeckham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:01:28 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/07 13:36:32 by ppeckham         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:15:12 by szapata-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_init_vars(t_info *info)
 	info->ceiling = -1;
 	info->validation = 0;
 	info->player = malloc(sizeof(t_player));
+	ft_memset(info->player, 0, sizeof(t_player));
 	if (!info->player)
 	{
 		ft_free_info(info);
@@ -91,6 +92,7 @@ int	parse_file(int fd, t_info *info)
 {
 	char	*line;
 	char	*tmp;
+	int		ret;
 
 	ft_init_vars(info);
 	tmp = NULL;
@@ -107,7 +109,7 @@ int	parse_file(int fd, t_info *info)
 	}
 	ft_validate_info(info);
 	set_map(tmp, fd, info);
-	check_map_valid(info->map);
-	close(fd);
+	if (check_map_valid(info->map) && !close(fd))
+		return (0);
 	return (1);
 }

@@ -6,101 +6,23 @@
 /*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 12:41:26 by ppeckham          #+#    #+#             */
-/*   Updated: 2025/04/07 17:18:55 by szapata-         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:07:21 by szapata-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	ft_set_player(t_info *info)
-{
-	int	i;
-	int	j;
+// void	ft_cleanup(void *param)
+// {
+// 	t_info	*info;
 
-	i = 0;
-	while (info->map[i])
-	{
-		j = 0;
-		
-		while (info->map[i][j])
-		{
-			if (info->map[i][j] == 'N' || info->map[i][j] == 'S'
-				|| info->map[i][j] == 'W' ||info->map[i][j] == 'E')
-			{
-				info->player->column = j;
-				info->player->line = i;
-				info->player->orientation = info->map[i][j];
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-void	ft_get_screen_h_w(t_info *info)
-{
-	info->mlx = mlx_init(1, 1, "cub3d", true);
-	if (!info->mlx && print_err2(23))
-		return ;
-	mlx_get_monitor_size(0, &info->w, &info->h);
-	info->w = info->w / 2;
-	info->h = info->h / 2;
-	mlx_terminate(info->mlx);
-}
-
-void	draw_cell(t_info *info, int x, int y, int color)
-{
-	int	stepX;
-	int	stepY;
-	int	i;
-	int	j;
-
-	stepX = info->w / info->map_w;
-	stepY = info->h / info->map_h;
-	i = 0;
-	while (i < stepX)
-	{
-		j = 0;
-		while (j < stepY)
-		{
-			mlx_put_pixel(info->img, (x * stepX) + i, (y * stepY) + j, color);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	set_grid(t_info *info)
-{
-	int	i;
-	int	j;
-
-	info->map_w = ft_big(info->map);
-	info->map_h = ft_maplen(info->map);
-	i = 0;
-	j = 0;
-	while (info->map[i])
-	{
-		j = 0;
-		while (info->map[i][j])
-		{
-			if (info->map[i][j] == '1')
-				draw_cell(info, j, i, 0xffffff);
-			else if (info->map[i][j] == '0')
-				draw_cell(info, j, i, 0xa0a0a0);
-			else if (i == info->player->line && j == info->player->column)
-				draw_cell(info, j, i, 0xFF000000);
-			else
-				draw_cell(info, j, i, 0);
-			j++;
-		}
-		i++;
-	}
-}
+// 	info = (t_info *)param;
+// 	printf("Deleted all textures\n");
+// }
 
 void	ft_game(t_info *info)
 {
-	ft_get_screen_h_w(info);	// gets screen w and h and divides it by 2
+	ft_get_screen_h_w(info);
 	ft_set_player(info);
 	info->mlx = mlx_init(info->w, info->h, "cub3d", false);
 	if (!info->mlx && print_err2(23))
@@ -109,7 +31,13 @@ void	ft_game(t_info *info)
 	if ((!info->img || (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0))
 		&& print_err2(23))
 		return ;
-	set_grid(info);
+	init_texture(info);
+	ft_raycasting(info);
+	mlx_loop_hook(info->mlx, &player_moves, info);
 	mlx_loop(info->mlx);
+	mlx_delete_texture(info->north);
+	mlx_delete_texture(info->south);
+	mlx_delete_texture(info->east);
+	mlx_delete_texture(info->west);
 	mlx_terminate(info->mlx);
 }

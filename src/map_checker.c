@@ -6,7 +6,7 @@
 /*   By: szapata- <szapata-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:10:26 by szapata-          #+#    #+#             */
-/*   Updated: 2025/04/03 14:51:16 by szapata-         ###   ########.fr       */
+/*   Updated: 2025/04/21 19:09:07 by szapata-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_map_limits(char	**tmp)
 	return (0);
 }
 
-int	check_player(char	**map)
+int	check_player(char **map)
 {
 	int	i;
 	int	j;
@@ -106,7 +106,7 @@ int	check_map_valid(char **map)
 
 	tmp = NULL;
 	if (!map)
-		return (0);
+		return (-1);
 	map_trim(map);
 	x = ft_big(map);
 	y = ft_maplen(map);
@@ -114,10 +114,12 @@ int	check_map_valid(char **map)
 	if (!tmp)
 		return (-1);
 	fill_map(tmp, map, x, y);
-	if (check_map_limits(tmp))
-		print_err(20);
-	if (check_player(map))
-		print_err(21);
+	if ((check_map_limits(tmp) && print_err2(20))
+		|| (check_player(map) && print_err2(21)))
+	{
+		free_array(tmp);
+		return (-1);
+	}
 	free_array(tmp);
-	return (1);
+	return (0);
 }

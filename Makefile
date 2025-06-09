@@ -1,35 +1,35 @@
-MLX = MLX42/build/libmlx42.a
+MLX = libmlx42.a
 LIBFT = libft/libft.a
 CC = cc 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address -g
+FLAGS = -Wall -Werror -Wextra
 INC = -Iinclude -ldl -lglfw -pthread -lm
 NAME = cub3D
-SRC = $(wildcard src/*.c)
+
+SRC = free_n_errors.c  ft_hooks.c  ft_rotate.c  game.c  main.c  map_checker.c  \
+	map_parse.c  map_utils.c  path_parse_a.c  path_parse_b.c  player_init.c  \
+	raycasting_a.c  raycasting_b.c  sceen_mlx_minimap.c  utils.c
+
 OBJ_DIR = obj
-OBJT = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
+
+OBJT = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
 $(OBJ_DIR)/%.o: src/%.c
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) ${CFLAGS} ${INC} -c $< -o $@
+	@$(CC) ${CFLAGS} -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): ${OBJT} $(LIBFT) $(MLX)
-	@$(CC) $(OBJT) $(LIBFT) $(MLX) $(INC) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJT) $(LIBFT) $(MLX) $(INC) -o $(NAME)
 
 $(LIBFT):
 	@make -C libft
 
-$(MLX):
-	@make -C MLX42/build -j4
-
 clean:
 	@rm -rf $(OBJ_DIR)
 	@make clean -s -C libft
-	@make clean -s -C MLX42/build
 
 fclean: clean
-	@make fclean -s -C libft
 	@rm -rf $(NAME)
 
 re:
