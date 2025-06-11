@@ -1,7 +1,7 @@
 # cub3D  
 ## 3D Raycasting Project from 42
 
-cub3D is a simple 3D game engine project created at 42 coding academy. The core of the project is built around raycasting, using the **DDA (Digital Differential Analizer)** algorithm to render a 3D view from a 2D map. The program loads a map file (with the `.cub` extension), parses it, and then renders the scene with walls and player movement — all using your CPU, no fancy GPU tricks.
+cub3D is a simple 3D game engine project created at 42 coding academy. The core of the project is built around raycasting, using the **DDA (Digital Differential Analyzer)** algorithm to render a 3D view from a 2D map. The program loads a map file (with the `.cub` extension), parses it, and then renders the scene with walls and player movement — all using your CPU, no fancy GPU tricks.
 
 ### How to Compile  
 Open a terminal in the project directory and run:  
